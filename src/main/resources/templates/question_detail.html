@@ -1,7 +1,7 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
     <!-- 질문 -->
-    <h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
+    <h2 id="questionHead" class="border-bottom py-2" th:text="${question.subject}"></h2>
     <div class="card my-3">
         <div class="card-body">
             <div class="card-text" style="white-space: pre-line;" th:text="${question.content}"></div>
@@ -19,7 +19,7 @@
         <input type="submit" value="답변등록" class="btn btn-primary my-2">
     </form>
     <!-- 답변의 개수 표시 -->
-    <h5 class="border-bottom my-3 py-2"
+    <h5 id="commentHead" class="border-bottom my-3 py-2"
         th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
     <!-- 답변 반복-->
     <div class="card my-3" th:each="answer : ${question.answerList}">
