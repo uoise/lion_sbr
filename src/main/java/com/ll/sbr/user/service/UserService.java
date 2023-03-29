@@ -2,6 +2,7 @@ package com.ll.sbr.user.service;
 
 import com.ll.sbr.user.model.SiteUser;
 import com.ll.sbr.user.repository.UserRepository;
+import com.ll.sbr.utils.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,9 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public SiteUser getSiteUser(String username) {
-        return userRepository.findByUsername(username).orElseThrow();
+        return userRepository.findByUsername(username).orElseThrow(() -> {
+            throw new DataNotFoundException("user not found");
+        });
     }
 
     @Transactional
