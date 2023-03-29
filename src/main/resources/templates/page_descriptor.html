@@ -1,0 +1,11 @@
+<div th:fragment="pageDescFragment">
+    <div class="container-fluid">
+        <div th:text="|paging.isEmpty: ${paging.isEmpty}|"></div>
+        <div th:text="|paging.totalElements: ${paging.totalElements}|"></div>
+        <div th:text="|paging.totalPages: ${paging.totalPages}|"></div>
+        <div th:text="|paging.size: ${paging.size}|"></div>
+        <div th:text="|paging.number: ${paging.number}|"></div>
+        <div th:text="|paging.hasPrevious: ${paging.hasPrevious}|"></div>
+        <div th:text="|paging.hasNext: ${paging.hasNext}|"></div>
+    </div>
+</div>

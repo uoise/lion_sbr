@@ -8,12 +8,11 @@ import com.ll.sbr.user.model.SiteUser;
 import com.ll.sbr.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,9 +23,9 @@ public class QuestionController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        List<Question> questionList = questionService.getQuestionList();
-        model.addAttribute("questionList", questionList);
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
+        Page<Question> paging = questionService.getQuestionList(page);
+        model.addAttribute("paging", paging);
         return "question_list";
     }
 

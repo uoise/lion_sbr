@@ -5,9 +5,14 @@ import com.ll.sbr.question.repository.QuestionRepository;
 
 import com.ll.sbr.user.model.SiteUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,8 +26,13 @@ public class QuestionService {
     }
 
     @Transactional(readOnly = true)
-    public List<Question> getQuestionList() {
-        return questionRepository.findAll();
+    public Page<Question> getQuestionList(int page) {
+        int DEFAULT_PAGE_SIZE = 10;
+        String DEFAULT_PROPERTIES = "createDate";
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc(DEFAULT_PROPERTIES));
+        Pageable pageable = PageRequest.of(page, DEFAULT_PAGE_SIZE, Sort.by(sorts));
+        return questionRepository.findAll(pageable);
     }
 
     @Transactional
