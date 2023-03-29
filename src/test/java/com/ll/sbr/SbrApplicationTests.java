@@ -54,16 +54,18 @@ class SbrApplicationTests {
         userRepository.clearAutoIncrement();
 
         System.out.println("=========== DELETE DONE ===========");
-        userService.create("user1", "user1@gmail.com", "1234");
-        userService.create("jake", "jake@gmail.com", "1234");
-        userService.create("dean", "dean@gmail.com", "1234");
+        userService.create("user1", "1234", "user1@gmail.com");
+        userService.create("jake", "1234", "jake@gmail.com");
+        userService.create("dean", "1234", "dean@gmail.com");
 
         SiteUser u1 = userService.getSiteUser("jake");
         SiteUser u2 = userService.getSiteUser("dean");
 
-        Question q1 = questionService.create("Meaning of Spring Triangle", "what is this?", u1);
         for (int i = 1; i <= 300; i++) questionService.create(String.format("Sbb[%s]", i), "autogen", u2);
+        Question q1 = questionService.create("Meaning of Spring Triangle", "what is this?", u1);
+
         for (int i = 0; i < 14; i++) answerService.create(q1, String.format("%s is my num", i), u2);
+
 
         System.out.println("=========== DB INIT DONE ===========");
     }
