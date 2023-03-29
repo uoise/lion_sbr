@@ -3,6 +3,7 @@ package com.ll.sbr.user.service;
 import com.ll.sbr.user.model.SiteUser;
 import com.ll.sbr.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public SiteUser getSiteUser(String username) {
@@ -18,11 +20,11 @@ public class UserService {
     }
 
     @Transactional
-    public SiteUser create(String uesrsname, String email, String password) {
+    public SiteUser create(String username, String password, String email) {
         return userRepository.save(SiteUser.builder()
-                .username(uesrsname)
+                .username(username)
+                .password(passwordEncoder.encode(password))
                 .email(email)
-                .password(password) // required encode
                 .build());
     }
 }
