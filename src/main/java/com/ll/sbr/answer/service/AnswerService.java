@@ -4,6 +4,7 @@ import com.ll.sbr.answer.model.Answer;
 import com.ll.sbr.answer.repository.AnswerRepository;
 import com.ll.sbr.question.model.Question;
 import com.ll.sbr.user.model.SiteUser;
+import com.ll.sbr.utils.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,9 @@ public class AnswerService {
 
     @Transactional(readOnly = true)
     public Answer getAnswer(Long id) {
-        return answerRepository.findById(id).orElseThrow();
+        return answerRepository.findById(id).orElseThrow(() -> {
+            throw new DataNotFoundException("answer not found");
+        });
     }
 
     @Transactional(readOnly = true)

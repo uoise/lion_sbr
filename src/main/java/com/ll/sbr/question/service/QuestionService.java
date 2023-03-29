@@ -4,6 +4,7 @@ import com.ll.sbr.question.model.Question;
 import com.ll.sbr.question.repository.QuestionRepository;
 
 import com.ll.sbr.user.model.SiteUser;
+import com.ll.sbr.utils.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +23,9 @@ public class QuestionService {
 
     @Transactional(readOnly = true)
     public Question getQuestion(Long id) {
-        return questionRepository.findById(id).orElseThrow();
+        return questionRepository.findById(id).orElseThrow(() -> {
+            throw new DataNotFoundException("question not found");
+        });
     }
 
     @Transactional(readOnly = true)
